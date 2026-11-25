@@ -1,0 +1,45 @@
+import { expect, test } from '@playwright/test'
+
+test('离线演示：提交至本地路线展示，且没有外部请求', async ({ page }) => {
+  const external: string[] = []
+  page.on('request', request => {
+    const host = new URL(request.url()).hostname
+    if (!['127.0.0.1', 'localhost'].includes(host)) external.push(request.url())
+  })
+  await page.goto('/')
+  await expect(page.getByText('把旅行的期待')).toBeVisible()
+  await page.getByRole('button', { name: '开始规划我的路线' }).click()
+  const citySearch = page.getByRole('textbox', { name: '搜索或手工输入城市' })
+  await expect(citySearch).toBeFocused()
+  await citySearch.fill('上海')
+  await page.locator('.route-search-panel .city-option').filter({ hasText: /^上海/ }).click()
+  await citySearch.fill('不存在之城')
+  await page.locator('.route-search-panel').getByRole('button', { name: '验证并添加' }).click()
+  await expect(page.getByText('未找到该城市')).toBeVisible()
+  await citySearch.fill('北京')
+  await page.locator('.route-search-panel .city-option').filter({ hasText: /^北京/ }).click()
+  await page.locator('.route-destinations .route-stop-summary button').click()
+  await citySearch.fill('西安')
+  await page.locator('.route-search-panel .city-option').filter({ hasText: /^西安/ }).click()
+  await page.getByRole('button', { name: '开始生成我的行程' }).click()
+  await expect(page.getByText('行程已生成')).toBeVisible()
+  await expect(page.getByTestId('local-route')).toContainText('离线演示')
+  await expect(page.getByText('每日安排')).toBeVisible()
+  await expect(page.locator('.day-connections')).toBeVisible()
+  await page.getByLabel('筛选行程日期').selectOption('1')
+  await expect(page.locator('.day-card')).toHaveCount(1)
+  await expect(page.locator('.result-workspace')).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true)
+  await expect.poll(() => external).toEqual([])
+})
+
+test('移动端欢迎页和城市选择器可操作', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page.getByRole('button', { name: '开始规划我的路线' }).click()
+  const picker = page.locator('.route-search-panel')
+  await expect(picker.getByLabel('按省份选择城市')).toBeVisible()
+  await picker.getByLabel('按省份选择城市').selectOption('浙江')
+  await expect(picker.locator('.city-option').filter({ hasText: /^杭州/ })).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true)
+})

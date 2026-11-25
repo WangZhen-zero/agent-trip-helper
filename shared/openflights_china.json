@@ -1,0 +1,17 @@
+{
+  "source": "OpenFlights static snapshot",
+  "notice": "机场与航司资料为静态基础信息，不代表实际航线、班次或运营状态。",
+  "airports": [
+    {"name":"北京首都国际机场","city":"北京","iata":"PEK","icao":"ZBAA"},
+    {"name":"北京大兴国际机场","city":"北京","iata":"PKX","icao":"ZBAD"},
+    {"name":"上海浦东国际机场","city":"上海","iata":"PVG","icao":"ZSPD"},
+    {"name":"上海虹桥国际机场","city":"上海","iata":"SHA","icao":"ZSSS"},
+    {"name":"西安咸阳国际机场","city":"西安","iata":"XIY","icao":"ZLXY"},
+    {"name":"杭州萧山国际机场","city":"杭州","iata":"HGH","icao":"ZSHC"}
+  ],
+  "airlines": [
+    {"name":"中国国际航空","iata":"CA","icao":"CCA"},
+    {"name":"中国东方航空","iata":"MU","icao":"CES"},
+    {"name":"中国南方航空","iata":"CZ","icao":"CSN"}
+  ]
+}

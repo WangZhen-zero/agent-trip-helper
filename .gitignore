@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------
+# 密钥与本地配置（最高优先级：任何真实凭据都不得入库）
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+secrets.yml
+secrets.yaml
+.envrc
+
+# ---------------------------------------------------------------
+# Python / Conda
+# ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+.conda-env/
+.conda-pkgs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# 本地临时环境与安装日志（体积大且不可复现）
+.test-conda-env/
+.test-conda-pkgs/
+.test-conda-*.log
+
+# ---------------------------------------------------------------
+# Node / 前端构建产物
+# ---------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.tsbuildinfo
+*.local
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------------------------------------------------------------
+# 测试与覆盖率报告
+# ---------------------------------------------------------------
+.vitest/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# ---------------------------------------------------------------
+# 编辑器与操作系统
+# ---------------------------------------------------------------
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
